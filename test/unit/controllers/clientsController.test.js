@@ -3,23 +3,23 @@ const td = require('testdouble');
 
 const { expect } = chai;
 
-describe('clientsController', () => {	
+describe('clientsController', () => {
 	afterEach = () =>  {
 		td.reset()
-	}
+	};
 
 	it('#get should return clients list', async () => {
 		const clientsList = [
 			{ id: 'someid' }
-		]
+		];
 
 		const clientModel = td.replace('../../../src/models/ClientModel');
 		td.when(clientModel.getList()).thenResolve(clientsList);
-	
+
 		const ClientsController = require('../../../src/controllers/ClientsController');
 
 		const getResult = await ClientsController.get();
-		
+
 		expect(getResult)
 			.to.be.an('array')
 			.that.equals(clientsList)
@@ -45,8 +45,8 @@ describe('clientsController', () => {
 				firstname: 'John',
 				surname: 'Doe',
 			}
-		}
-		
+		};
+
 		const validator = td.replace('../../../src/helpers/validator');
 		td.when(validator.validate(td.matchers.isA(String), req.body))
 			.thenReturn({ valid: true });
@@ -64,10 +64,36 @@ describe('clientsController', () => {
 			.that.is.an('string')
 	});
 
+	it ('#updateOne should change one client', async () => {
+		const req = {
+			body: {
+				firstname: 'Mary',
+				surname: 'Jane',
+			}
+		};
+
+		const validator = td.replace('../../../src/helpers/validator');
+		td.when(validator.validate(td.matchers.isA(String), req.body))
+			.thenReturn({ valid: true });
+
+		const clientModel = td.replace('../../../src/models/ClientModel');
+		td.when(clientModel.updateOne(req.body)).thenResolve({ client: 'client-updated' });
+
+		const ClientsController = require('../../../src/controllers/ClientsController');
+		const updateOneResult = await ClientsController.updateOne(req);
+
+
+		expect(updateOneResult)
+			.to.be.an('object')
+			.and.has.property('message')
+			.that.is.an('string')
+			.that.equals('success')
+	});
+
 	it ('#deleteOne should return success', async () => {
 		const clientModel = td.replace('../../../src/models/ClientModel');
 		td.when(clientModel.deleteById('some-client-id')).thenResolve();
-		
+
 		const ClientsController = require('../../../src/controllers/ClientsController');
 		const deleteOneResult = await ClientsController.deleteOne({ params: { clientId: 'some-client-id' }});
 
