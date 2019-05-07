@@ -21,6 +21,21 @@ class ClientsController {
 		return ClientModel.createOne(req.body);
 	}
 
+	// PATCH - Update a client
+	static async updateOne(req) {
+		await validator.validate('ClientUpdateModel', req.body);
+
+		const client = {
+			clientId: req.params.clientId,
+			firstname: req.body.firstname,
+			surname: req.body.surname,
+		};
+
+		await ClientModel.updateOne(client);
+
+		return { message: 'success' };
+	}
+
 	// DELETE - Delete a client
 	static async deleteOne(req) {
 		const { clientId } = req.params;

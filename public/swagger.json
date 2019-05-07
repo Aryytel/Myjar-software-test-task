@@ -22,13 +22,13 @@
         "responses": {
           "200": {
             "description": "List of clients or empty array"
-					},
-					"500": {
-						"description": "Something went wrong!"
-					}
+          },
+          "500": {
+            "description": "Something went wrong!"
+          }
         }
-			},
-			"POST": {
+      },
+      "POST": {
         "summary": "ClientModel",
         "responses": {
           "200": {
@@ -36,34 +36,50 @@
           }
         }
       }
-		},
-		"/api/v1/clients/{id}": {
+    },
+    "/api/v1/clients/{id}": {
       "GET": {
-				"summary": "ClientModel",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"description": "Client UUID v4",
-						"required": true
-					}
-				],
+        "summary": "ClientModel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client UUID v4",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns client data"
           }
         }
-			},
-			"DELETE": {
-				"summary": "ClientModel",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"description": "Client UUID v4",
-						"required": true
-					}
-				],
+      },
+      "PATCH": {
+        "summary": "clientUpdateModel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client UUID v4",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns ok and client is update if exists"
+          }
+        }
+      },
+      "DELETE": {
+        "summary": "ClientModel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Client UUID v4",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns ok and client is deleted if exists"
@@ -76,21 +92,43 @@
     "ClientModel": {
       "properties": {
         "firstname": {
-					"type": "string",
-					"minLength": 1,
-					"maxLength": 64
-				},
-				"surname": {
-					"type": "string",
-					"minLength": 1,
-					"maxLength": 64
-				},
-				"phoneNumber": {
-					"type": "string",
-					"pattern": "^\\+4407([0-9]{9,14})"
-				}
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "surname": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "phoneNumber": {
+          "type": "string",
+          "pattern": "^\\+4407([0-9]{9,14})"
+        }
       },
-      "required": ["firstname", "surname", "phoneNumber"]
+      "required": [
+        "firstname",
+        "surname",
+        "phoneNumber"
+      ]
+    },
+    "ClientUpdateModel": {
+      "properties": {
+        "firstname": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "surname": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "firstname",
+        "surname"
+      ]
     }
   }
 }

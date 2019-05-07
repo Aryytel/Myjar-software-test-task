@@ -66,6 +66,9 @@ describe('clientsController', () => {
 
 	it ('#updateOne should change one client', async () => {
 		const req = {
+			params: {
+				clientId: 'some-client-id',
+			},
 			body: {
 				firstname: 'Mary',
 				surname: 'Jane',
